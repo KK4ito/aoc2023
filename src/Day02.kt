@@ -10,7 +10,7 @@ fun main() {
         input.forEach { line ->
             val split = line.split(":")
             val setsOfCubes = split[1].split(";")
-            var possible = true;
+            var possible = true
 
             setsOfCubes.forEach { set ->
                 set.trim().split(", ").map { entry ->
@@ -27,8 +27,6 @@ fun main() {
             if (possible) sum += index
             index++
         }
-        println(sum)
-
         return sum
     }
 
@@ -36,7 +34,7 @@ fun main() {
         var sum = 0
 
         input.forEach { line ->
-            var mapOfFewestCube = mutableMapOf(
+            val mapOfFewestCube = mutableMapOf(
                 "red" to 0,
                 "green" to 0,
                 "blue" to 0
@@ -59,8 +57,6 @@ fun main() {
             }
             sum += mapOfFewestCube.values.fold(1) {sum ,element -> sum * element}
         }
-        println(sum)
-
         return sum
     }
 

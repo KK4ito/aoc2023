@@ -1,5 +1,3 @@
-import kotlin.streams.asStream
-
 fun main() {
 
     class RangeStartingPoint(iter: ListIterator<List<Long>>) {
@@ -51,17 +49,20 @@ fun main() {
         seedsLongRangeLine: List<LongRange>
     ): Long {
         val toList = maps.map { entry -> RangeStartingPoint(entry.listIterator()) }.toList()
-        val test = seedsLongRangeLine.map { seedsLine ->
-            val locationNumber = seedsLine.asSequence().asStream().parallel().map { seed -> 
+        val longList = seedsLongRangeLine.map { seedsLine ->
+            var minLocationNumber = Long.MAX_VALUE
+            seedsLine.forEach { seed ->
                 var processNumber = seed
-                toList.map { entry -> processNumber = entry.getNumberIfInRange(processNumber) }
-                processNumber
-            }.toList()
-            locationNumber.min()
-        }.toList()
-        return test.min()
+                toList.forEach { entry -> processNumber = entry.getNumberIfInRange(processNumber) }
+                if (processNumber < minLocationNumber){
+                    minLocationNumber = processNumber
+                }
+            }
+            minLocationNumber
+        }
+        return longList.min()
     }
-    
+
     fun part1(input: List<String>): Long {
         val seedsLine = input.first().split(":")[1].trim().split(" ").map { it.toLong() }
         val locationNumber = processInput(constructMapping(input), seedsLine)
@@ -75,9 +76,9 @@ fun main() {
         }.toList()
 //        val seedsLine = pairedRanges.flatMap { it.toList() } // hello fucking no
         val locationNumber = processInputParellel(constructMapping(input), pairedRanges)
-        
+
         return locationNumber
-}
+    }
 
 
     // test if implementation meets criteria from the description, like:

@@ -74,10 +74,7 @@ fun main() {
         val pairedRanges = split.chunked(2).map { pair ->
             pair[0]..<pair[0] + pair[1]
         }.toList()
-//        val seedsLine = pairedRanges.flatMap { it.toList() } // hello fucking no
-        val locationNumber = processInputParellel(constructMapping(input), pairedRanges)
-
-        return locationNumber
+        return processInputParellel(constructMapping(input), pairedRanges)
     }
 
 
